@@ -1,12 +1,10 @@
 import java.io.*;
 import java.util.*;
 
-public class ReadRaw {
+public class Patterning {
     static ArrayList<Integer> first = new ArrayList<Integer>(),second = new ArrayList<Integer>(),third = new ArrayList<Integer>();
-    public static void main(String[] args) {
-        int width=123;
+    public Patterning(String file,int width){
         try{
-            String file="Imgpro.raw";
             String outputfile=file.substring(0, file.length()-4)+"(Patterning).raw";
             FileOutputStream MyOutputFile=new FileOutputStream(outputfile);
             FileInputStream MyInputFile=new FileInputStream(file);
@@ -14,25 +12,21 @@ public class ReadRaw {
             int i=0;
             while((value=MyInputFile.read())!=-1){
                 i++;
-                if(i>(width-1)){
+                findRange(value);
+                if(i>width-1){
                     for(int j=0;j<first.size();j++){
                         MyOutputFile.write(first.get(j));
                     }
-                    MyOutputFile.write('\n');
                     for(int j=0;j<second.size();j++){
                         MyOutputFile.write(second.get(j));
                     }
-                    MyOutputFile.write('\n');
                     for(int j=0;j<third.size();j++){
                         MyOutputFile.write(third.get(j));
                     }
-                    MyOutputFile.write('\n');
                     first.clear();
                     second.clear();
                     third.clear();
                     i=0;
-                }else{
-                    findRange(value);
                 }
             }
             MyOutputFile.close();
